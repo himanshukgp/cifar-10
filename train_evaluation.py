@@ -42,7 +42,7 @@ def train(**keywords):
     test_summary_writer = tf.summary.FileWriter(test_summary_dir)
     test_summary_writer.add_graph(keywords['sess'].graph)
 
-    # If fie-tuning flag in 'True' the model will be restored.
+    # If fine-tuning flag in 'True' the model will be restored.
     if keywords['finetuning']:
         keywords['saver'].restore(keywords['sess'], os.path.join(keywords['checkpoint_dir'], checkpoint_prefix))
         print("Model restored for fine-tuning...")
@@ -137,13 +137,13 @@ def train(**keywords):
             # Add the couter of global step for proper scaling between train and test summuries.
             test_summary_writer.add_summary(test_summaries, global_step=current_step)
 
+
+            
     ###########################################################
     ############ Saving the model checkpoint ##################
     ###########################################################
 
     # # The model will be saved when the training is done.
-
-    # Create the path for saving the checkpoints.
     if not os.path.exists(keywords['checkpoint_dir']):
         os.makedirs(keywords['checkpoint_dir'])
 
@@ -151,6 +151,8 @@ def train(**keywords):
     save_path = keywords['saver'].save(keywords['sess'], os.path.join(keywords['checkpoint_dir'], checkpoint_prefix))
     print("Model saved in file: %s" % save_path)
 
+    # Create the path for saving the checkpoints.
+    
 
     ############################################################################
     ########## Run the session for pur evaluation on the test data #############

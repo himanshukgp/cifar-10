@@ -16,7 +16,7 @@ tf.app.flags.DEFINE_string(
 	os.path.dirname(os.path.abspath(__file__)) + '/checkpoints',
 	'Directory where checkpoints are written to.')
 
-tf.app.flags.DEFINE_integer('max_num_checkpoint', 10,
+tf.app.flags.DEFINE_integer('max_num_checkpoint', 5,
 							'Maximum number of checkpoints that TensorFlow will keep.')
 
 tf.app.flags.DEFINE_integer('num_classes', 10,
