@@ -18,6 +18,21 @@ _images_per_file = 10000
 _num_images_train = _num_files_train * _images_per_file
 
 
+def print_progress(progress, epoch_num, loss):
+	barLength = 30
+	assert type(progress) is float, "id is not a float: %r" % id
+	assert 0 <= progress <= 1, "variable should be between zero and one!"
+	status = ""
+	if progress >= 1:
+		progress = 1
+		status = "\r\n"
+	indicator = int(round(barLength*progress))
+	list = [str(epoch_num), "#"*indicator , "-"*(barLength-indicator), progress*100, loss, status]
+	text = "\rEpoch {0[0]} {0[1]} {0[2]} %{0[3]:.2f} loss={0[4]:.3f} {0[5]}".format(list)
+	sys.stdout.write(text)
+	sys.stdout.flush()
+
+
 def one_hot_encoded(class_numbers, num_classes=None):
 	if num_classes is None:
 		num_classes = np.max(class_numbers) + 1
@@ -25,24 +40,24 @@ def one_hot_encoded(class_numbers, num_classes=None):
 	return np.eye(num_classes, dtype=float)[class_numbers]
 
 def _unpickle(filename):
-    file_path = os.path.join(data_path, "cifar-10-batches-py/", filename)
-    print("Loading data: " + file_path)
-    with open(file_path, mode='rb') as file:
-        data = pickle.load(file, encoding='bytes')
-    return data
+	file_path = os.path.join(data_path, "cifar-10-batches-py/", filename)
+	print("Loading data: " + file_path)
+	with open(file_path, mode='rb') as file:
+		data = pickle.load(file, encoding='bytes')
+	return data
 
 def _convert_images(raw):
-    raw_float = np.array(raw, dtype=float) / 255.0
-    images = raw_float.reshape([-1, num_channels, img_size, img_size])
-    images = images.transpose([0, 2, 3, 1])
-    return images
+	raw_float = np.array(raw, dtype=float) / 255.0
+	images = raw_float.reshape([-1, num_channels, img_size, img_size])
+	images = images.transpose([0, 2, 3, 1])
+	return images
 
 def _load_data(filename):
-    data = _unpickle(filename)
-    raw_images = data[b'data']
-    cls = np.array(data[b'labels'])
-    images = _convert_images(raw_images)
-    return images, cls
+	data = _unpickle(filename)
+	raw_images = data[b'data']
+	cls = np.array(data[b'labels'])
+	images = _convert_images(raw_images)
+	return images, cls
 
 
 def _print_download_progress(count, block_size, total_size):
@@ -60,8 +75,8 @@ def maybe_download_and_extract(url=data_url, download_dir=data_path):
 			os.makedirs(download_dir)
 
 		file_path, _ = urllib.request.urlretrieve(url=url,
-		                                          filename=file_path, 
-		                                          reporthook=_print_download_progress)
+												  filename=file_path, 
+												  reporthook=_print_download_progress)
 		print()
 		print("Download finished. Extracting files.")
 
@@ -77,9 +92,9 @@ def maybe_download_and_extract(url=data_url, download_dir=data_path):
 		print("Data has apparently already been downloaded and unpacked.")
 
 def load_class_names():
-    raw = _unpickle(filename="batches.meta")[b'label_names']
-    names = [x.decode('utf-8') for x in raw]
-    return names
+	raw = _unpickle(filename="batches.meta")[b'label_names']
+	names = [x.decode('utf-8') for x in raw]
+	return names
 
 def load_training_data():
 	images = np.zeros(shape=[_num_images_train, img_size, img_size, num_channels], dtype=float)
