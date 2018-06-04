@@ -1,7 +1,7 @@
 from __future__ import print_function
 import tensorflow as tf
 import numpy as np
-from auxiliary import progress_bar
+from data_helpers import print_progress
 import os
 import sys
 
@@ -95,7 +95,7 @@ def train(**keywords):
             #################################################
 
             progress = float(batch_num + 1) / total_batch_training
-            progress_bar.print_progress(progress, epoch_num=epoch + 1, loss=batch_loss)
+            print_progress(progress, epoch_num=epoch + 1, loss=batch_loss)
 
         # ################################################################
         # ############ Summaries per epoch of training ###################
