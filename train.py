@@ -43,7 +43,7 @@ tf.app.flags.DEFINE_float(
 tf.app.flags.DEFINE_boolean('is_training', False,
 							'Training/Testing.')
 
-tf.app.flags.DEFINE_boolean('fine_tuning', False,
+tf.app.flags.DEFINE_boolean('fine_tuning', True,
 							'Fine tuning is desired or not?.')
 
 tf.app.flags.DEFINE_boolean('online_test', True,
