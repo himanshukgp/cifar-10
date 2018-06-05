@@ -1,0 +1,6 @@
+data
+train_logs
+checkpoints
+data_helpers.cpython-36.pyc
+train_evaluation.cpython-36.pyc
+net.cpython-36.pyc
